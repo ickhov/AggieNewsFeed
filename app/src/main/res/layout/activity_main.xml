@@ -27,7 +27,6 @@
         app:layout_constraintBottom_toTopOf="@id/guideline"
         android:background="@color/white"/>
 
-    <!--
     <fragment
         android:id="@+id/news_fragment"
         android:name="com.ickhov.aggienewsfeed.Views.NewsFragment"
@@ -37,5 +36,5 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline"/>
-        -->
+
 </android.support.constraint.ConstraintLayout>

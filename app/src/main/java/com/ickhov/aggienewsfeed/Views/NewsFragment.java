@@ -9,18 +9,12 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.ickhov.aggienewsfeed.R;
 
 public class NewsFragment extends ListFragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -28,22 +22,21 @@ public class NewsFragment extends ListFragment {
         // Required empty public constructor
     }
 
-    public static NewsFragment newInstance(String param1, String param2) {
+    public static NewsFragment newInstance() {
         NewsFragment fragment = new NewsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+        String[] o = {"S", "A", "G"};
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>
+                (getActivity(), android.R.layout.simple_list_item_1, o);
+
+        setListAdapter(adapter);
     }
 
     @Override
@@ -55,6 +48,11 @@ public class NewsFragment extends ListFragment {
 
 
         return view;
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
     }
 
     @Override
