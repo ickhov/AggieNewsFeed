@@ -2,26 +2,29 @@ package com.ickhov.aggienewsfeed.Models;
 
 public class News {
 
-    String name;
-    String url;
+    String title;
+    String author;
 
-    public News() {
-
+    public News(String title, String author) {
+        this.title = title;
+        this.author = author;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getTitle() {
+        return title;
     }
 
-    public String getName() {
-        return name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public String getAuthor() {
+        return author;
     }
 
-    public String getUrl() {
-        return url;
+    public void setAuthor(String author) {
+        this.author = author;
     }
+
+
 }

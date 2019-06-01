@@ -12,7 +12,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.ickhov.aggienewsfeed.Controllers.NewsArrayAdapter;
+import com.ickhov.aggienewsfeed.Models.News;
 import com.ickhov.aggienewsfeed.R;
+
+import java.util.ArrayList;
 
 public class NewsFragment extends ListFragment {
 
@@ -23,31 +27,38 @@ public class NewsFragment extends ListFragment {
     }
 
     public static NewsFragment newInstance() {
-        NewsFragment fragment = new NewsFragment();
-        return fragment;
+        return new NewsFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        String[] o = {"S", "A", "G"};
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>
-                (getActivity(), android.R.layout.simple_list_item_1, o);
-
-        setListAdapter(adapter);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_news, container, false);
+        return inflater.inflate(R.layout.fragment_news, container, false);
+    }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
+        News news1 = new News("Campus", "Harry");
 
+        News news2 = new News("Activity", "Mary");
 
-        return view;
+        News news3 = new News("Life", "Marc");
+
+        ArrayList<News> list = new ArrayList<>();
+        list.add(news1);
+        list.add(news2);
+        list.add(news3);
+
+        NewsArrayAdapter adapter = new NewsArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, list);
+
+        setListAdapter(adapter);
     }
 
     @Override
