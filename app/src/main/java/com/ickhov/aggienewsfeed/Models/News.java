@@ -4,10 +4,16 @@ public class News {
 
     String title;
     String author;
+    String datePublished;
+    String url;
+    String content;
 
-    public News(String title, String author) {
+    public News(String title, String author, String datePublished, String url, String content) {
         this.title = title;
         this.author = author;
+        this.datePublished = datePublished;
+        this.url = url;
+        this.content = content;
     }
 
     public String getTitle() {
@@ -26,5 +32,27 @@ public class News {
         this.author = author;
     }
 
+    public String getDatePublished() {
+        return datePublished;
+    }
 
+    public void setDatePublished(String datePublished) {
+        this.datePublished = datePublished;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }
