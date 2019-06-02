@@ -8,4 +8,5 @@
     <string name="more_info">More Info</string>
     <string name="news_detail">Details</string>
     <string name="web_view">Click here to view the article online</string>
+    <string name="back_btn">Back Button</string>
 </resources>

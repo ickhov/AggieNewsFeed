@@ -8,28 +8,59 @@
     android:orientation="vertical"
     android:background="@color/UCDBlue">
 
-    <ImageButton
-        android:id="@+id/news_detail_back_btn"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:srcCompat="@drawable/round_navigate_before_24"
-        android:scaleType="fitStart"
-        android:background="@color/transparent_black"/>
+        android:layout_height="60dp"
+        android:background="@color/transparent_black">
 
-    <com.ickhov.aggienewsfeed.Views.CustomViews.MediumTextView
-        android:id="@+id/news_detail_title"
+        <android.support.constraint.Guideline
+            android:id="@+id/news_detail_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.2" />
+
+        <ImageButton
+            android:id="@+id/news_detail_back_btn"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/round_navigate_before_24"
+            android:contentDescription="@string/back_btn"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/news_detail_title"/>
+
+        <com.ickhov.aggienewsfeed.Views.CustomViews.MediumTextView
+            android:id="@+id/news_detail_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center"
+            android:text="@string/news_detail"
+            android:textSize="30sp"
+            app:layout_constraintLeft_toRightOf="@id/news_detail_back_btn"
+            app:layout_constraintRight_toLeftOf="@id/news_detail_space"/>
+
+        <Space
+            android:id="@+id/news_detail_space"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            app:layout_constraintLeft_toRightOf="@id/news_detail_title"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <Space
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:textSize="30sp"
-        android:text="@string/news_detail"
-        android:gravity="center"/>
+        android:layout_height="10dp" />
 
     <com.ickhov.aggienewsfeed.Views.CustomViews.RegularTextView
         android:id="@+id/news_detail_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@null"
+        android:textSize="15sp"
         android:gravity="start"
         android:textColor="@color/white"
         android:paddingStart="10dp"
@@ -37,7 +68,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="5dp" />
+        android:layout_height="15dp" />
 
     <com.ickhov.aggienewsfeed.Views.CustomViews.MediumButton
         android:id="@+id/news_detail_web_view_btn"
