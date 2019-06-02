@@ -2,7 +2,6 @@ package com.ickhov.aggienewsfeed.Views;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
@@ -30,8 +29,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class NewsFragment extends ListFragment {
 
@@ -57,6 +54,7 @@ public class NewsFragment extends ListFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news, container, false);
 
+        // initialize progressBar to remove later
         progressBar = view.findViewById(R.id.progressBar);
 
         return view;
@@ -66,8 +64,10 @@ public class NewsFragment extends ListFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        // store news array to populate array adapter
         aggieFeed = new ArrayList<>();
 
+        // read data from JSON response using worker thread
         Thread thread = new Thread(JSONRunnable);
         thread.start();
     }
@@ -98,21 +98,20 @@ public class NewsFragment extends ListFragment {
 
     }
 
+    // perform JSON fetching and parsing
     Runnable JSONRunnable = new Runnable() {
         @Override
         public void run() {
-            // start a request queue for JSON response
-            RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-
             // url for JSON response
             String url = "https://aggiefeed.ucdavis.edu/api/v1/activity/public?s=0?l=10";
 
-            fetchJSONResponse(requestQueue, url);
+            // call fetch request
+            fetchJSONResponse(url);
         }
     };
 
     /*
-    // get the aggie news feed in the background
+    // get the aggie news feed in the background using AsyncTask
     public static class GetAggieFeed extends AsyncTask<Void, Void, Void> {
 
         RequestQueue requestQueue;      // start a request queue for JSON response
@@ -143,7 +142,9 @@ public class NewsFragment extends ListFragment {
     }
     */
 
-    private void fetchJSONResponse(RequestQueue requestQueue, String url) {
+    // fetch JSON response
+    private void fetchJSONResponse(String url) {
+        // request a JSONArray response from the url
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
@@ -160,11 +161,17 @@ public class NewsFragment extends ListFragment {
                     }
                 });
 
+        // initialize a RequestQueue
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+
+        // send the request
         requestQueue.add(jsonArrayRequest);
     }
 
+    // parse JSON data
     private void parseJSONResponse(JSONArray response) {
         try {
+            // use for loop to get the desired info from JSONArray
             for (int i = 0; i < response.length(); i++) {
                 JSONObject object = response.getJSONObject(i);
 
@@ -176,6 +183,7 @@ public class NewsFragment extends ListFragment {
                 String newsURL =  details.getJSONObject("ucdEdusModel").getString ("url");
                 String content =  Html.fromHtml(details.getString("content")).toString();
 
+                // create news object using info and add it to aggieFeed array
                 News news = new News(title, author, datePublished, newsURL, content);
                 aggieFeed.add(news);
             }
@@ -183,8 +191,13 @@ public class NewsFragment extends ListFragment {
             e.printStackTrace();
         }
 
+        // there's item to populate array adapter so hide progressBar
         progressBar.setVisibility(View.GONE);
+
+        // init adapter and set it to ListFragment
         NewsArrayAdapter adapter = new NewsArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, aggieFeed);
         setListAdapter(adapter);
+        // Note: I called it here because it's the only way to make
+        // sure that aggieFeed populated before setting it to the adapter
     }
 }

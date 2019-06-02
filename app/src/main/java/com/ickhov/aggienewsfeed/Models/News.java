@@ -1,12 +1,13 @@
 package com.ickhov.aggienewsfeed.Models;
 
+// News Model to store data for a news item
 public class News {
 
-    String title;
-    String author;
-    String datePublished;
-    String url;
-    String content;
+    private String title;
+    private String author;
+    private String datePublished;
+    private String url;
+    private String content;
 
     public News(String title, String author, String datePublished, String url, String content) {
         this.title = title;
