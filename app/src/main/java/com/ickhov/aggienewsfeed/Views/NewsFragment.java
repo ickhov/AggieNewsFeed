@@ -76,6 +76,8 @@ public class NewsFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
+
+        mListener.onItemClicked(aggieFeed.get(position));
     }
 
     @Override
@@ -96,7 +98,7 @@ public class NewsFragment extends ListFragment {
     }
 
     public interface OnFragmentInteractionListener {
-
+        void onItemClicked(News newsItem);
     }
 
     Handler handler = new Handler();
