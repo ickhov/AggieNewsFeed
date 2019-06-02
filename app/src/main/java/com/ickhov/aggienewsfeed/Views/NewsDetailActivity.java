@@ -32,17 +32,47 @@ public class NewsDetailActivity extends AppCompatActivity implements View.OnClic
     // set back button
     private void setBack() {
         back = findViewById(R.id.news_detail_back_btn);
+        back.setOnClickListener(this);
     }
 
     // set web view button
     private void setWebView() {
         webView = findViewById(R.id.news_detail_web_view_btn);
+        webView.setOnClickListener(this);
     }
 
     // set detail text view
     private void setDetails() {
         details = findViewById(R.id.news_detail_details);
+        details.setText(getDetailText());
+    }
 
+    private String getDetailText() {
+        StringBuffer buffer = new StringBuffer();
+
+        // title section
+        buffer.append("Title: ");
+        buffer.append(news.getTitle());
+
+        buffer.append("\n\n");
+
+        // author section
+        buffer.append("Author: ");
+        buffer.append(news.getAuthor());
+
+        buffer.append("\n\n");
+
+        // date published section
+        buffer.append("Published: ");
+        buffer.append(news.getDatePublished());
+
+        buffer.append("\n\n");
+
+        // content section
+        buffer.append("Description: ");
+        buffer.append(news.getContent());
+
+        return buffer.toString();
     }
 
     @Override
