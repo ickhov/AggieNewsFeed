@@ -52,7 +52,6 @@ public class WebViewFragment extends Fragment {
         return view;
     }
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -62,16 +61,19 @@ public class WebViewFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+
+        mListener.hideWebViewButton();
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-
+        mListener.showWebViewButton();
         mListener = null;
     }
 
     public interface OnFragmentInteractionListener {
-
+        void hideWebViewButton();
+        void showWebViewButton();
     }
 }

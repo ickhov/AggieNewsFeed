@@ -104,4 +104,14 @@ public class NewsDetailActivity extends AppCompatActivity implements View.OnClic
                 break;
         }
     }
+
+    @Override
+    public void hideWebViewButton() {
+        webView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showWebViewButton() {
+        webView.setVisibility(View.VISIBLE);
+    }
 }
