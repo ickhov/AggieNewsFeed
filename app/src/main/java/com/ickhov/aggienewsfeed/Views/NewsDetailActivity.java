@@ -1,6 +1,7 @@
 package com.ickhov.aggienewsfeed.Views;
 
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -97,7 +98,7 @@ public class NewsDetailActivity extends AppCompatActivity implements View.OnClic
                 // open the WebViewFragment
                 getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_top, R.anim.enter_from_top, R.anim.exit_to_bottom)
-                        .add(R.id.activity_news_detail, webViewFragment)
+                        .replace(R.id.activity_news_detail, webViewFragment)
                         .addToBackStack(null)
                         .commit();
                 break;
