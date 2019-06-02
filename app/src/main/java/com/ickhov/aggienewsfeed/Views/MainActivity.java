@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onItemClicked(News newsItem) {
         Intent intent = new Intent(MainActivity.this, NewsDetailActivity.class);
-        
+        intent.putExtra("item", newsItem);
+        startActivity(intent);
     }
 }

@@ -68,7 +68,7 @@ public class NewsFragment extends ListFragment {
         // store news array to populate array adapter
         aggieFeed = new ArrayList<>();
 
-        // read data from JSON response using worker thread
+        // read data from JSON using worker thread
         Thread thread = new Thread(JSONRunnable);
         thread.start();
     }
@@ -76,7 +76,7 @@ public class NewsFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-
+        // handle click on the list item
         mListener.onItemClicked(aggieFeed.get(position));
     }
 
@@ -101,6 +101,7 @@ public class NewsFragment extends ListFragment {
         void onItemClicked(News newsItem);
     }
 
+    // handler to run a runnable
     Handler handler = new Handler();
 
     // perform JSON fetching and parsing
@@ -113,6 +114,8 @@ public class NewsFragment extends ListFragment {
             // call fetch request
             fetchJSONResponse(url);
 
+            // run AdapterRunnable with delay in case
+            // aggieFeed array is not yet completely populated
             handler.postDelayed(AdapterRunnable, 2000);
         }
     };
@@ -122,6 +125,7 @@ public class NewsFragment extends ListFragment {
         @Override
         public void run() {
             if (aggieFeed.isEmpty()) {
+                // delay some more if aggieFeed is still empty after 2 seconds
                 handler.postDelayed(AdapterRunnable, 1000);
             } else {
                 // there's item to populate array adapter so hide progressBar
@@ -130,8 +134,8 @@ public class NewsFragment extends ListFragment {
                 // init adapter and set it to ListFragment
                 NewsArrayAdapter adapter = new NewsArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, aggieFeed);
                 setListAdapter(adapter);
-                // Note: I called it here because it's the only way to make
-                // sure that aggieFeed populated before setting it to the adapter
+                // Note: I called it here because it's the only way to make sure
+                // that aggieFeed is populated before setting it to the adapter.
             }
         }
     };
