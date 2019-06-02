@@ -11,19 +11,24 @@ import com.ickhov.aggienewsfeed.R;
 import com.ickhov.aggienewsfeed.Views.CustomViews.MediumButton;
 import com.ickhov.aggienewsfeed.Views.CustomViews.RegularTextView;
 
-public class NewsDetailActivity extends AppCompatActivity implements View.OnClickListener {
+public class NewsDetailActivity extends AppCompatActivity implements View.OnClickListener,
+    WebViewFragment.OnFragmentInteractionListener {
 
     private News news;
     private ImageButton back;
     private MediumButton webView;
     private RegularTextView details;
+    private WebViewFragment webViewFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
 
+        // get the News object passed from the previous activity
         news = getIntent().getParcelableExtra("item");
+
+        // initialize the views
         setBack();
         setWebView();
         setDetails();
@@ -47,6 +52,7 @@ public class NewsDetailActivity extends AppCompatActivity implements View.OnClic
         details.setText(getDetailText());
     }
 
+    // combine info from News object to make the detail screen
     private String getDetailText() {
         StringBuffer buffer = new StringBuffer();
 
@@ -79,10 +85,22 @@ public class NewsDetailActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.news_detail_back_btn:
+                // start the previous activity to go back
                 Intent intent = new Intent(NewsDetailActivity.this, MainActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.news_detail_web_view_btn: break;
+            case R.id.news_detail_web_view_btn:
+                // initialize WebViewFragment if it's new
+                if (webViewFragment == null)
+                    webViewFragment = WebViewFragment.newInstance(news.getUrl());
+
+                // open the WebViewFragment
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_top, R.anim.enter_from_top, R.anim.exit_to_bottom)
+                        .add(R.id.activity_news_detail, webViewFragment)
+                        .addToBackStack(null)
+                        .commit();
+                break;
         }
     }
 }

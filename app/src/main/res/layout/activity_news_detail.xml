@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".Views.NewsDetailActivity"
     android:orientation="vertical"
-    android:background="@color/UCDBlue">
+    android:background="@color/UCDBlue"
+    android:id="@+id/activity_news_detail">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
