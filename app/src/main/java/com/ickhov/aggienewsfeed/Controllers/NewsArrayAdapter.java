@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 
 import com.ickhov.aggienewsfeed.Models.News;
 import com.ickhov.aggienewsfeed.R;
+import com.ickhov.aggienewsfeed.Views.CustomViews.MediumTextView;
 import com.ickhov.aggienewsfeed.Views.CustomViews.RegularTextView;
 
 import java.util.List;
@@ -31,10 +32,12 @@ public class NewsArrayAdapter extends ArrayAdapter<News> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
 
         RegularTextView title = convertView.findViewById(R.id.news_title);
-        RegularTextView author = convertView.findViewById(R.id.news_author);
+        MediumTextView author = convertView.findViewById(R.id.news_author);
 
         title.setText(news.getTitle());
-        author.setText(news.getAuthor());
+
+        String author_ = "By: " + news.getAuthor();
+        author.setText(author_);
 
         return convertView;
     }
