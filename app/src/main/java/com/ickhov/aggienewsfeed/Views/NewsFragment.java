@@ -2,6 +2,7 @@ package com.ickhov.aggienewsfeed.Views;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
@@ -98,6 +99,8 @@ public class NewsFragment extends ListFragment {
 
     }
 
+    Handler handler = new Handler();
+
     // perform JSON fetching and parsing
     Runnable JSONRunnable = new Runnable() {
         @Override
@@ -107,6 +110,27 @@ public class NewsFragment extends ListFragment {
 
             // call fetch request
             fetchJSONResponse(url);
+
+            handler.postDelayed(AdapterRunnable, 2000);
+        }
+    };
+
+    // populate the adapter if possible
+    Runnable AdapterRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (aggieFeed.isEmpty()) {
+                handler.postDelayed(AdapterRunnable, 1000);
+            } else {
+                // there's item to populate array adapter so hide progressBar
+                progressBar.setVisibility(View.GONE);
+
+                // init adapter and set it to ListFragment
+                NewsArrayAdapter adapter = new NewsArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, aggieFeed);
+                setListAdapter(adapter);
+                // Note: I called it here because it's the only way to make
+                // sure that aggieFeed populated before setting it to the adapter
+            }
         }
     };
 
@@ -190,14 +214,5 @@ public class NewsFragment extends ListFragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        // there's item to populate array adapter so hide progressBar
-        progressBar.setVisibility(View.GONE);
-
-        // init adapter and set it to ListFragment
-        NewsArrayAdapter adapter = new NewsArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, aggieFeed);
-        setListAdapter(adapter);
-        // Note: I called it here because it's the only way to make
-        // sure that aggieFeed populated before setting it to the adapter
     }
 }
